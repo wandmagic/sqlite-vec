@@ -6,6 +6,21 @@ on:
 permissions:
   contents: read
 jobs:
+  build-linux-arm64-extension:
+    runs-on: ubuntu-latest-arm64
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+      - run: ./scripts/vendor.sh
+      - run: make loadable static
+      - run: uv sync --directory tests
+      - run: make test-loadable python=./tests/.venv/bin/python
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sqlite-vec-linux-arm64-extension
+          path: dist/*
   build-linux-x86_64-extension:
     runs-on: ubuntu-20.04
     steps:
