@@ -50,7 +50,7 @@ ifndef OMIT_SIMD
 	CFLAGS += -mcpu=apple-m1 -DSQLITE_VEC_ENABLE_NEON
 	endif
 	ifeq ($(shell uname -sm),Linux aarch64)
-	CFLAGS += -march=armv8-a -DSQLITE_VEC_ENABLE_NEON
+	CFLAGS += -march=armv8-a 
 	endif
 endif
 
