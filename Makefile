@@ -49,6 +49,9 @@ ifndef OMIT_SIMD
 	ifeq ($(shell uname -sm),Darwin arm64)
 	CFLAGS += -mcpu=apple-m1 -DSQLITE_VEC_ENABLE_NEON
 	endif
+	ifeq ($(shell uname -sm),Linux aarch64)
+	CFLAGS += -march=armv8-a -DSQLITE_VEC_ENABLE_NEON
+	endif
 endif
 
 ifdef USE_BREW_SQLITE
