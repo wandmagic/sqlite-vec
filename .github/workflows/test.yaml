@@ -6,31 +6,6 @@ on:
 permissions:
   contents: read
 jobs:
-  build-linux-arm64-extension:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v3
-        with:
-          enable-cache: true
-      - name: Install cross-compilation toolchain
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y gcc-aarch64-linux-gnu
-      - run: ./scripts/vendor.sh
-      - name: Build ARM64 extension
-        run: |
-          make CC=aarch64-linux-gnu-gcc \
-            AR=aarch64-linux-gnu-ar \
-            RANLIB=aarch64-linux-gnu-ranlib \
-            STRIP=aarch64-linux-gnu-strip \
-            loadable static
-      - run: uv sync --directory tests
-      - run: make test-loadable python=./tests/.venv/bin/python
-      - uses: actions/upload-artifact@v4
-        with:
-          name: sqlite-vec-linux-arm64-extension
-          path: dist/*
   build-linux-x86_64-extension:
     runs-on: ubuntu-20.04
     steps:
